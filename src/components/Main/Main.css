@@ -1,0 +1,18 @@
+.blockCLickTime{
+    display: inline-block;
+    width: 220px;
+    height: 50px;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 50px;
+    background: white;
+    color: black;
+    margin: 10px;
+    font-size: 21px;
+    font-family: cursive;
+    user-select: none;
+    cursor: pointer;
+}
+.blockCLickTime:active{
+    background: #ffffffb0;
+}
