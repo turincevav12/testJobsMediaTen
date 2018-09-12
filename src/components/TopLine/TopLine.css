@@ -1,19 +1,17 @@
-.TopLine{
-    width: 100%;
-    border-bottom-color: white
-}
-.timeBlockTask{
-    display: inline-block;
-    width: 200px;
+.blockTimes{
+    width: 150px;
     height: 30px;
+    font-family: cursive;
+    background: white;
+    display: inline-block;
     text-align: center;
     line-height: 30px;
-    color: white;
-    font-family: cursive;
-    cursor: pointer;
-    box-shadow: 0 0 1px 1px white;
-    margin: 10px;
+    margin: 5px;
     border-radius: 3px;
     user-select: none;
-    background: #ffffff42;
+    cursor: pointer;
+}
+.topLines{
+    min-height: 50px;
+    width: 100%;
 }

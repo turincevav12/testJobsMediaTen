@@ -1,49 +1,48 @@
-import React, { Component } from 'react';
-import Modal from "react-modal"
+import React from 'react';
+import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import style from "./App.css"
 
-import { Main } from "../Main/Main"
+import { timeList, ADD_TIME, replaceTime, addTime } from "../../index"
+
+import { PopoverItem } from "../Popover/Popover.jsx"
 import { TopLine } from "../TopLine/TopLine"
-import { ModalForm } from "../ModalForm/ModalForm"
 
-export class App extends Component {
-    constructor(props){
-        super (props)
-        this.state = {
-            isOpenForm: false,
-            enterTime: [],
-            enterDopTime: []
+export class PopoverExampleMulti extends React.Component {
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        times: []
+      };
+
+      let times = []
+      for(var i = 9; i != 29; i++){
+        if(i <= 23){
+            var timeHours = i
+        }else{
+            var timeHours = i - 24
+        }
+        for(var j = 0; j != 2; j++){
+            if (j == 0){
+              times.push([timeHours, "00"])
+            }else{
+              times.push([timeHours, "30"])
+            }
         }
     }
-    enterTimeFunction = (time) => {
-        this.setState({
-            isOpenForm:true,
-            enterTime: time
-        })
+      this.state = ({
+        times: times
+      })
     }
-
-    returnTime = (retTime) => {
-        this.setState({
-            enterDopTime: retTime,
-            isOpenForm: false
-        })
+  
+    render() {
+      return (
+        <div className="app">
+          <TopLine/>
+          { this.state.times.map((time, i) => {
+            return <PopoverItem key={i} data={[time, i]} />;
+          })}
+        </div>
+      );
     }
-    render (){
-        return(
-            <div>
-                {(this.state.enterDopTime.length != 0) && <TopLine
-                    data = {this.state.enterDopTime}
-                />}
-                
-                <Main
-                    isFunction = { this.enterTimeFunction}
-                />
-
-                <ModalForm
-                    isOpen = {this.state.isOpenForm}
-                    time = {this.state.enterTime}
-                    returnTime = {this.returnTime}
-                />
-            </div>
-        )
-    }
-}
+  }
