@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-import { addTime } from "../../index"
+import { addTime } from "../../store/actionCreators"
 
 import { PopoverExampleMulti } from "../App/App.jsx"
 import style from "./Popover.css"
+import { timeList } from "../../store/reducer"
+import { store } from "../../store/actionCreators"
 
 export class PopoverItem extends React.Component {
   constructor(props) {
@@ -27,7 +29,9 @@ export class PopoverItem extends React.Component {
       mins00: mins00,
       mins30: mins30,
       dopTime: [],
-      idClick: ''
+      idClick: '',
+      dopClick: '',
+      styles: ''
     })
   }
 
@@ -38,22 +42,42 @@ export class PopoverItem extends React.Component {
   }
 
   enterTime = (e) => {
-    this.setState({
-      popoverOpen: !this.state.popoverOpen,
-      clickTime: ((e.target.innerText).split(':'))[0],
-      dopTime: ((e.target.innerText).split(':'))[1],
-      idClick: e.target.innerText
+
+    let target = e.target
+
+    store.getState().forEach(el => {
+      if (el[1] == e.target.innerText){
+        this.setState({
+          styles: el[0]
+        })
+      }      
     });
-    addTime([e.target.innerText, e.target.innerText])
+
+
+    setTimeout(() => {
+      this.setState({
+        popoverOpen: !this.state.popoverOpen,
+        clickTime: ((target.innerText).split(':'))[0],
+        dopTime: ((target.innerText).split(':'))[1],
+        idClick: target.innerText
+      });
+      addTime([target.innerText, target.innerText])
+      this.props.clickStore()  
+    }, 100);      
+
   }
 
-  enterDopTime(e){
+  enterDopTime(e){   
+
     var times = this.state.clickTime + ":" + e.target.innerText
     addTime([times, this.state.idClick])
 
     this.setState({
-      popoverOpen: !this.state.popoverOpen
+      popoverOpen: !this.state.popoverOpen,
+      dopClick: e.target.innerText
     });
+
+    this.props.clickStore()
   }
 
   render() {
@@ -64,15 +88,16 @@ export class PopoverItem extends React.Component {
         </div>
         <Popover data-togglet="popover" placement="top" isOpen={this.state.popoverOpen} target={'Popover-' + this.props.data[1]} toggle={this.toggle}>
           <PopoverHeader>Точное время</PopoverHeader>
+
           <PopoverBody>
             {(this.state.dopTime == "00") && this.state.mins00.map(e=>
-              <div className="enterDopTimes" onClick = {(e) => this.enterDopTime(e)}>
+              <div className={(this.state.styles == (this.state.clickTime + ":"+ e)) && "enterDopTimesFalse" || "enterDopTimes"} onClick = {(e) => this.enterDopTime(e)}>
                 {e}
               </div>
             )
             ||
             this.state.mins30.map(e=>
-              <div className="enterDopTimes" onClick = {(e) => this.enterDopTime(e)}>
+              <div className={(this.state.styles == (this.state.clickTime + ":"+ e)) && "enterDopTimesFalse" || "enterDopTimes"} onClick = {(e) => this.enterDopTime(e)}>
                 {e}
               </div>
             )

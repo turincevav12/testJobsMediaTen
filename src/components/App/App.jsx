@@ -31,16 +31,23 @@ export class PopoverExampleMulti extends React.Component {
         }
     }
       this.state = ({
-        times: times
+        times: times,
+        lengthMass: 0
       })
     }
   
+    clickStore = () => {
+      this.setState({
+        lengthMass: this.state.lengthMass + 1
+      })
+    }
+
     render() {
       return (
         <div className="app">
-          <TopLine/>
+          <TopLine store={this.state.lengthMass}/>
           { this.state.times.map((time, i) => {
-            return <PopoverItem key={i} data={[time, i]} />;
+            return <PopoverItem key={i} data={[time, i]} clickStore={() => this.clickStore()} />;
           })}
         </div>
       );
