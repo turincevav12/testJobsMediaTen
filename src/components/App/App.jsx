@@ -45,12 +45,13 @@ class PopoverExampleMulti extends React.Component {
 
     render() {
 
-      console.log(this.props.timeStore)
+      console.log("Объект стора", this.props.timeStore)
+
       return (
         <div className="app">
-          <TopLine store={this.state.lengthMass}/>
+          <TopLine timeList={this.props.timeStore[0]}/>
           { this.state.times.map((time, i) => {
-            return <PopoverItem key={i} data={[time, i]} clickStore={() => this.clickStore()} />;
+            return <PopoverItem key={i} popoverList={this.props.timeStore[1]} data={[time, i]} clickStore={() => this.clickStore()} />;
           })}
         </div>
       );
@@ -60,6 +61,5 @@ class PopoverExampleMulti extends React.Component {
   export default connect(
     state => ({
       timeStore: state
-    }),
-    dispatch => ({})
+    })
   )(PopoverExampleMulti)
