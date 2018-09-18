@@ -21,14 +21,21 @@ export class TopLine extends Component {
 
         store.getState().forEach(e => {
 
-            let intTime = e[0].split(":")
+            console.log(e)
+
             sortedTimes.push(
-                Number.parseInt(intTime[0] + intTime[1]) 
+                {
+                    timeTypeInt: Number.parseInt(e[0]),
+                    time: e[0],
+                    id: e[2]
+                }
             )
+
+            console.log(sortedTimes.sort())
         });
 
         stores = (sortedTimes.sort(function(a, b) {
-            return a - b;
+            return a.timeTypeInt - b.timeTypeInt;
           }))
     }
 

@@ -2,12 +2,13 @@ import React from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import style from "./App.css"
 
+import { connect } from "react-redux"
 import { timeList, ADD_TIME, replaceTime, addTime } from "../../index"
 
 import { PopoverItem } from "../Popover/Popover.jsx"
 import { TopLine } from "../TopLine/TopLine"
 
-export class PopoverExampleMulti extends React.Component {
+class PopoverExampleMulti extends React.Component {
     constructor(props) {
       super(props);
   
@@ -43,6 +44,8 @@ export class PopoverExampleMulti extends React.Component {
     }
 
     render() {
+
+      console.log(this.props.timeStore)
       return (
         <div className="app">
           <TopLine store={this.state.lengthMass}/>
@@ -53,3 +56,10 @@ export class PopoverExampleMulti extends React.Component {
       );
     }
   }
+
+  export default connect(
+    state => ({
+      timeStore: state
+    }),
+    dispatch => ({})
+  )(PopoverExampleMulti)

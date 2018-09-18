@@ -1,8 +1,8 @@
-import { createStore } from 'redux';
+import { createStore } from 'redux'
+
 import { timeList } from "./reducer"
 
 export const store = createStore(timeList);
-
 
 export function sorted(timesData){
     let sortedTime = []

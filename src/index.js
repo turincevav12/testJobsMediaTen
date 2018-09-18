@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
-import { PopoverExampleMulti } from './components/App/App';
+import { Provider } from 'react-redux'
+import { store } from "./store/actionCreators"
 
-ReactDOM.render(<PopoverExampleMulti />, document.getElementById('root'));
+import './index.css';
+import PopoverExampleMulti from './components/App/App';
+
+ReactDOM.render(<Provider store={store}><PopoverExampleMulti /></Provider>, document.getElementById('root'));
